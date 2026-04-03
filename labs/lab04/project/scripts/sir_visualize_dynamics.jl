@@ -1,0 +1,32 @@
+# # Итоговая визуализация параметрического исследования
+# Построение сводного графика по результатам beta-сканирования.
+
+using DrWatson
+@quickactivate "project"
+
+using CSV
+using CairoMakie
+using DataFrames
+
+script_name = splitext(basename(PROGRAM_FILE))[1]
+mkpath(plotsdir())
+mkpath(datadir(script_name))
+
+source_csv = datadir("sir_scan_beta", "beta_scan_summary.csv")
+if !isfile(source_csv)
+    error("Run scripts/sir_scan_beta.jl first: missing $source_csv")
+end
+
+summary = CSV.read(source_csv, DataFrame)
+
+fig = Figure(size = (950, 900))
+ax1 = Axis(fig[1, 1]; title = "Peak infected share", xlabel = "beta", ylabel = "Peak share")
+lines!(ax1, summary.beta, summary.peak_mean; color = :firebrick2, linewidth = 2)
+ax2 = Axis(fig[2, 1]; title = "Mean deaths", xlabel = "beta", ylabel = "Deaths")
+lines!(ax2, summary.beta, summary.deaths_mean; color = :gray20, linewidth = 2)
+ax3 = Axis(fig[3, 1]; title = "Recovered share", xlabel = "beta", ylabel = "Recovered share")
+lines!(ax3, summary.beta, summary.final_rec_mean; color = :seagreen4, linewidth = 2)
+
+outfile = plotsdir("sir_beta_visualization.png")
+save(outfile, fig)
+println("saved: ", outfile)

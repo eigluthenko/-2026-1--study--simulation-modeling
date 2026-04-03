@@ -1,0 +1,95 @@
+# Оптимизация с ограничением на пик
+Минимизация смертности при условии peak <= 0.3.
+
+```{julia}
+using DrWatson
+@quickactivate "project"
+
+using BlackBoxOptim
+using CSV
+using DataFrames
+
+include(srcdir("sir_model.jl"))
+
+script_name = splitext(basename(PROGRAM_FILE))[1]
+mkpath(datadir(script_name))
+
+const OPTIMIZATION_SEEDS = (101, 202, 303)
+
+function constrained_objective(x)
+    beta_und = x[1]
+    detection_time = round(Int, x[2])
+    death_rate = x[3]
+    mean_peak = 0.0
+    mean_death = 0.0
+    for seed in OPTIMIZATION_SEEDS
+        model = initialize_sir(
+            Ns = [1000, 1000, 1000],
+            Is = [1, 0, 0],
+            beta_und = beta_und,
+            beta_det = beta_und / 10,
+            infection_period = 14,
+            detection_time = clamp(detection_time, 2, 12),
+            death_rate = clamp(death_rate, 0.0, 0.1),
+            reinfection_probability = 0.1,
+            migration_intensity = 0.2,
+            seed = seed,
+        )
+        df = simulate_sir!(model, 60)
+        metrics = summarize_dynamics(df, 3000)
+        mean_peak += metrics.peak
+        mean_death += metrics.death_fraction
+    end
+    mean_peak /= length(OPTIMIZATION_SEEDS)
+    mean_death /= length(OPTIMIZATION_SEEDS)
+    penalty = mean_peak > 0.3 ? 100 * (mean_peak - 0.3)^2 : 0.0
+    return mean_death + penalty
+end
+
+res = bboptimize(constrained_objective;
+    SearchRange = [(0.35, 0.8), (2.0, 12.0), (0.02, 0.08)],
+    NumDimensions = 3,
+    MaxSteps = 25,
+    TraceMode = :verbose,
+)
+
+best = best_candidate(res)
+beta_und = best[1]
+detection_time = round(Int, best[2])
+death_rate = best[3]
+mean_peak, mean_death = let peak_acc = 0.0, death_acc = 0.0
+    for seed in OPTIMIZATION_SEEDS
+        model = initialize_sir(
+            Ns = [1000, 1000, 1000],
+            Is = [1, 0, 0],
+            beta_und = beta_und,
+            beta_det = beta_und / 10,
+            infection_period = 14,
+            detection_time = clamp(detection_time, 2, 12),
+            death_rate = clamp(death_rate, 0.0, 0.1),
+            reinfection_probability = 0.1,
+            migration_intensity = 0.2,
+            seed = seed,
+        )
+        df = simulate_sir!(model, 60)
+        metrics = summarize_dynamics(df, 3000)
+        peak_acc += metrics.peak
+        death_acc += metrics.death_fraction
+    end
+    (peak_acc / length(OPTIMIZATION_SEEDS), death_acc / length(OPTIMIZATION_SEEDS))
+end
+
+out = DataFrame(
+    beta_und = [beta_und],
+    detection_time = [clamp(detection_time, 2, 12)],
+    death_rate = [clamp(death_rate, 0.0, 0.1)],
+    objective = [best_fitness(res)],
+    peak_infected = [mean_peak],
+    death_fraction = [mean_death],
+    satisfies_constraint = [mean_peak <= 0.3],
+)
+CSV.write(datadir(script_name, "optimization_with_constraint.csv"), out)
+println(out)
+println("saved: ", datadir(script_name, "optimization_with_constraint.csv"))
+```
+

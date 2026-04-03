@@ -1,0 +1,94 @@
+# Исследование миграции между городами
+Анализ зависимости времени и величины пика от интенсивности миграции.
+
+```{julia}
+using DrWatson
+@quickactivate "project"
+
+using CSV
+using CairoMakie
+using DataFrames
+using Statistics
+
+include(srcdir("sir_model.jl"))
+
+script_name = splitext(basename(PROGRAM_FILE))[1]
+mkpath(plotsdir())
+mkpath(datadir(script_name))
+
+migration_values = [0.0, 0.05, 0.1, 0.2, 0.3, 0.4]
+seeds = 1:8
+base = (
+    Ns = [1000, 1000, 1000],
+    Is = [1, 0, 0],
+    infection_period = 14,
+    detection_time = 7,
+    death_rate = 0.02,
+    reinfection_probability = 0.1,
+    beta_und = 0.5,
+    beta_det = 0.05,
+    n_steps = 80,
+)
+
+rows = DataFrame(
+    n_steps = Int[], Is = Vector{Int}[], infection_period = Int[], detection_time = Int[],
+    beta_det = Float64[], reinfection_probability = Float64[], Ns = Vector{Int}[],
+    peak_value = Float64[], peak_time = Int[], death_rate = Float64[],
+    beta_und = Float64[], migration_intensity = Float64[], seed = Int[], C = Int[]
+)
+
+for migration_intensity in migration_values
+    for seed in seeds
+        model = initialize_sir(
+            Ns = base.Ns,
+            Is = base.Is,
+            beta_und = base.beta_und,
+            beta_det = base.beta_det,
+            infection_period = base.infection_period,
+            detection_time = base.detection_time,
+            death_rate = base.death_rate,
+            reinfection_probability = base.reinfection_probability,
+            migration_intensity = migration_intensity,
+            seed = seed,
+        )
+        df = simulate_sir!(model, base.n_steps)
+        metrics = summarize_dynamics(df, sum(base.Ns))
+        push!(rows, (
+            base.n_steps,
+            base.Is,
+            base.infection_period,
+            base.detection_time,
+            base.beta_det,
+            base.reinfection_probability,
+            base.Ns,
+            metrics.peak,
+            metrics.peak_time,
+            base.death_rate,
+            base.beta_und,
+            migration_intensity,
+            seed,
+            3,
+        ))
+    end
+    println("migration_intensity = ", migration_intensity, " completed")
+end
+
+CSV.write(datadir(script_name, "migration_scan_all.csv"), rows)
+summary = combine(groupby(rows, :migration_intensity),
+    :peak_value => mean => :peak_mean,
+    :peak_time => mean => :peak_time_mean)
+CSV.write(datadir(script_name, "migration_scan_summary.csv"), summary)
+
+fig = Figure(size = (950, 700))
+ax1 = Axis(fig[1, 1]; title = "Peak time vs migration", xlabel = "migration_intensity", ylabel = "Peak time")
+lines!(ax1, summary.migration_intensity, summary.peak_time_mean; color = :royalblue3, linewidth = 2)
+ax2 = Axis(fig[2, 1]; title = "Peak infected fraction vs migration", xlabel = "migration_intensity", ylabel = "Peak share")
+lines!(ax2, summary.migration_intensity, summary.peak_mean; color = :firebrick2, linewidth = 2)
+
+outfile = plotsdir("migration_effect.png")
+save(outfile, fig)
+println("saved: ", outfile)
+println("saved: ", datadir(script_name, "migration_scan_all.csv"))
+println("saved: ", datadir(script_name, "migration_scan_summary.csv"))
+```
+

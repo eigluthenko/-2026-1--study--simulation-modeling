@@ -1,0 +1,148 @@
+---
+author:
+  name: Глущенко Евгений Игоревич
+  affiliation:
+    - name: Российский университет дружбы народов имени Патриса Лумумбы
+      country: Российская Федерация
+      postal-code: 117198
+      city: Москва
+      address: ул. Миклухо-Маклая, д. 6
+title: Имитационное моделирование
+subtitle: "Лабораторная работа №4. Агентная SIR-модель"
+license: CC BY
+date: 2026-04-03
+date-format: "YYYY-MM-DD"
+---
+
+# Информация
+
+## Докладчик
+
+- Глущенко Евгений Игоревич
+- студент группы НФИбд-01-23
+- студенческий билет: 1132239110
+
+# Цель и задачи
+
+## Цель работы
+
+- [Пункт 1]
+- [Пункт 2]
+- [Пункт 3]
+
+## Задание
+
+1. [Пункт 1]
+2. [Пункт 2]
+3. [Пункт 3]
+4. [Пункт 4]
+
+# Теоретическое введение
+
+## Модель SIR
+
+- [Кратко переписать]
+
+## Основные параметры
+
+- [Параметры модели]
+
+## Базовое репродуктивное число
+
+[Формула и краткий вывод]
+
+# Настройка окружения
+
+## Запуск Julia
+
+![](image/fig01-julia-start.png){width=88%}
+
+## Активация проекта
+
+![](image/fig02-pkg-setup.png){width=88%}
+
+# Базовый эксперимент
+
+## Запуск `sir_run_basic.jl`
+
+![](image/fig03-sir-run-basic.png){width=88%}
+
+## График базовой динамики
+
+![](image/generated/sir_basic_dynamics.png){width=88%}
+
+# Исследование коэффициента заразности
+
+## Запуск `sir_scan_beta.jl`
+
+![](image/fig04-sir-scan-beta.png){width=88%}
+
+## Итоговый график по `beta`
+
+![](image/generated/beta_scan_summary.png){width=88%}
+
+# Исследование миграции
+
+## Запуск `sir_migration_effect.jl`
+
+![](image/fig05-sir-migration.png){width=88%}
+
+## График влияния миграции
+
+![](image/generated/migration_effect.png){width=88%}
+
+# Оптимизация и итоговая визуализация
+
+## Запуск базовой оптимизации
+
+![](image/fig06-sir-optimize-basic.png){width=88%}
+
+## Сводный график
+
+![](image/generated/sir_beta_visualization.png){width=88%}
+
+# Дополнительные задания
+
+## Эффект гетерогенности
+
+![](image/fig08-sir-heterogeneity-run.png){width=88%}
+
+![](image/generated/heterogeneity_dynamics.png){width=88%}
+
+## Карантинный сценарий
+
+![](image/fig09-sir-quarantine-run.png){width=88%}
+
+![](image/generated/quarantine_comparison.png){width=88%}
+
+## Оптимизация с ограничением на пик
+
+![](image/fig10-sir-optimize-constraint-run.png){width=88%}
+
+![](image/fig17-optimization-constraint-csv.png){width=92%}
+
+# Literate и воспроизводимость
+
+## Генерация производных форматов
+
+![](image/fig11-tangle-generation.png){width=88%}
+
+## Выполнение notebook
+
+![](image/fig12-notebook-execution.png){width=88%}
+
+## Итоговая структура файлов
+
+![](image/fig13-generated-files.png){width=72%}
+
+# Итоги
+
+## Выводы
+
+- [Вывод 1]
+- [Вывод 2]
+- [Вывод 3]
+
+## Спасибо за внимание
+
+Вопросы?

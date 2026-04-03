@@ -1,0 +1,66 @@
+using DrWatson
+@quickactivate "project"
+
+using CSV
+using CairoMakie
+using DataFrames
+
+include(srcdir("sir_model.jl"))
+
+script_name = splitext(basename(PROGRAM_FILE))[1]
+mkpath(plotsdir())
+mkpath(datadir(script_name))
+
+base_kwargs = (
+    Ns = [1000, 1000, 1000],
+    Is = [1, 0, 0],
+    beta_und = 0.5,
+    beta_det = 0.05,
+    infection_period = 14,
+    detection_time = 7,
+    death_rate = 0.02,
+    reinfection_probability = 0.1,
+    migration_intensity = 0.1,
+    seed = 1234,
+)
+
+baseline_model = initialize_sir(; base_kwargs..., quarantine_enabled = false)
+baseline_df = simulate_sir!(baseline_model, 80; include_closure = false)
+CSV.write(datadir(script_name, "quarantine_baseline.csv"), baseline_df)
+
+quarantine_model = initialize_sir(; base_kwargs..., quarantine_enabled = true, quarantine_threshold = 0.02)
+quarantine_df = simulate_sir!(quarantine_model, 80; include_closure = true)
+CSV.write(datadir(script_name, "quarantine_enabled.csv"), quarantine_df)
+
+base_metrics = summarize_dynamics(baseline_df, 3000)
+qu_metrics = summarize_dynamics(quarantine_df, 3000)
+summary = DataFrame(
+    scenario = ["baseline", "quarantine"],
+    peak_infected = [base_metrics.peak, qu_metrics.peak],
+    peak_time = [base_metrics.peak_time, qu_metrics.peak_time],
+    deaths = [base_metrics.deaths, qu_metrics.deaths],
+)
+CSV.write(datadir(script_name, "quarantine_summary.csv"), summary)
+
+fig = Figure(size = (1000, 900))
+ax1 = Axis(fig[1, 1]; title = "Infected", xlabel = "Step", ylabel = "Agents")
+lines!(ax1, baseline_df.time, baseline_df.infected; color = :gray35, linewidth = 2, label = "baseline")
+lines!(ax1, quarantine_df.time, quarantine_df.infected; color = :firebrick2, linewidth = 2, label = "quarantine")
+axislegend(ax1; position = :rt)
+ax2 = Axis(fig[2, 1]; title = "Total population", xlabel = "Step", ylabel = "Agents")
+lines!(ax2, baseline_df.time, baseline_df.total; color = :gray35, linewidth = 2, label = "baseline")
+lines!(ax2, quarantine_df.time, quarantine_df.total; color = :steelblue3, linewidth = 2, label = "quarantine")
+axislegend(ax2; position = :rb)
+ax3 = Axis(fig[3, 1]; title = "City closures", xlabel = "Step", ylabel = "Closed")
+lines!(ax3, quarantine_df.time, quarantine_df.city1_closed; linewidth = 2, label = "city1")
+lines!(ax3, quarantine_df.time, quarantine_df.city2_closed; linewidth = 2, label = "city2")
+lines!(ax3, quarantine_df.time, quarantine_df.city3_closed; linewidth = 2, label = "city3")
+axislegend(ax3; position = :rb)
+
+outfile = plotsdir("quarantine_comparison.png")
+save(outfile, fig)
+println(summary)
+println("saved: ", outfile)
+println("saved: ", datadir(script_name, "quarantine_baseline.csv"))
+println("saved: ", datadir(script_name, "quarantine_enabled.csv"))
+println("saved: ", datadir(script_name, "quarantine_summary.csv"))

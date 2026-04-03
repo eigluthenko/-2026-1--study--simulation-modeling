@@ -1,0 +1,226 @@
+ЛАБОРАТОРНАЯ РАБОТА 4
+Агентная реализация SIR-модели
+
+Рабочая папка проекта:
+/home/lilidji/github-push-work/labs/lab04/project
+
+ВАЖНО:
+- ниже отдельно выделены именно команды, которые нужно вставлять;
+- блоки разделены на `ВСТАВИТЬ В ТЕРМИНАЛ` и `ВСТАВИТЬ В JULIA`;
+- это уже правильная версия lab04 под SIR, beta-scan, migration, heterogeneity, quarantine и optimization.
+
+============================================================
+1. ВХОД В JULIA И АКТИВАЦИЯ ПРОЕКТА
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+~/.juliaup/bin/julia
+```
+
+Что делает:
+- переходит в папку проекта;
+- запускает Julia REPL.
+
+Что скриншотить:
+- запуск Julia;
+- при желании отдельно можно показать `~/.juliaup/bin/julia --version`.
+
+ВСТАВИТЬ В JULIA:
+```julia
+using Pkg
+Pkg.activate("/home/lilidji/github-push-work/labs/lab04/project")
+Pkg.instantiate()
+Pkg.precompile()
+exit()
+```
+
+Что делает:
+- активирует проект;
+- устанавливает и проверяет зависимости;
+- предкомпилирует пакеты.
+
+Что скриншотить:
+- `Pkg.activate`;
+- `Pkg.instantiate`;
+- `Pkg.precompile`.
+
+============================================================
+2. ОСНОВНЫЕ СКРИПТЫ
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+
+~/.juliaup/bin/julia --project=. scripts/sir_run_basic.jl
+~/.juliaup/bin/julia --project=. scripts/sir_scan_beta.jl
+~/.juliaup/bin/julia --project=. scripts/sir_migration_effect.jl
+~/.juliaup/bin/julia --project=. scripts/sir_optimize_parameters.jl
+~/.juliaup/bin/julia --project=. scripts/sir_visualize_dynamics.jl
+~/.juliaup/bin/julia --project=. scripts/sir_heterogeneity_effect.jl
+~/.juliaup/bin/julia --project=. scripts/sir_quarantine_scenario.jl
+~/.juliaup/bin/julia --project=. scripts/sir_optimize_with_constraint.jl
+```
+
+Что делает:
+- `sir_run_basic.jl` строит базовую динамику `S(t), I(t), R(t), total`;
+- `sir_scan_beta.jl` делает параметрическое исследование по `beta`;
+- `sir_migration_effect.jl` исследует влияние миграции;
+- `sir_optimize_parameters.jl` запускает базовую оптимизацию;
+- `sir_visualize_dynamics.jl` строит итоговую сводную визуализацию по `beta`;
+- `sir_heterogeneity_effect.jl` исследует неоднородность городов;
+- `sir_quarantine_scenario.jl` сравнивает сценарии без карантина и с карантином;
+- `sir_optimize_with_constraint.jl` решает оптимизацию с ограничением на пик.
+
+Что должно появиться:
+- графики в `plots/`;
+- CSV-таблицы в `data/`;
+- текстовый вывод по каждому сценарию.
+
+Что скриншотить:
+- запуск каждого скрипта;
+- строки `saved: ...`;
+- таблицы в терминале для `heterogeneity`, `quarantine`, `optimization`.
+
+============================================================
+3. ГЕНЕРАЦИЯ LITERATE-АРТЕФАКТОВ
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_run_basic.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_scan_beta.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_migration_effect.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_optimize_parameters.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_visualize_dynamics.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_heterogeneity_effect.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_quarantine_scenario.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_optimize_with_constraint.jl
+```
+
+Что делает:
+- создаёт clean-версии `.jl`;
+- создаёт `.ipynb`;
+- создаёт `.qmd`.
+
+Что должно появиться:
+- `scripts/<name>/<name>.jl`
+- `notebooks/<name>/<name>.ipynb`
+- `docs/<name>/<name>.qmd`
+
+Что скриншотить:
+- вывод `generated for ...`.
+
+============================================================
+4. ВЫПОЛНЕНИЕ NOTEBOOK
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_run_basic/sir_run_basic.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_scan_beta/sir_scan_beta.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_migration_effect/sir_migration_effect.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_optimize_parameters/sir_optimize_parameters.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_visualize_dynamics/sir_visualize_dynamics.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_heterogeneity_effect/sir_heterogeneity_effect.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_quarantine_scenario/sir_quarantine_scenario.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_optimize_with_constraint/sir_optimize_with_constraint.ipynb
+```
+
+Что делает:
+- исполняет каждый notebook;
+- сохраняет результаты прямо в `ipynb`.
+
+Что скриншотить:
+- строки `Converting notebook ...`;
+- успешное завершение каждого запуска.
+
+============================================================
+5. ПРОВЕРКА РЕЗУЛЬТАТОВ
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+
+ls -1 plots | sort
+find data -maxdepth 2 -type f | sort
+find scripts -maxdepth 2 -type f | sort
+find notebooks -maxdepth 2 -type f | sort
+find docs -maxdepth 2 -type f | sort
+```
+
+Что делает:
+- показывает графики;
+- показывает CSV-файлы;
+- показывает literate-артефакты.
+
+Что скриншотить:
+- `plots/`;
+- `data/`;
+- `scripts/`;
+- `notebooks/`;
+- `docs/`.
+
+============================================================
+6. КОРОТКИЙ ВАРИАНТ БЕЗ ПОЯСНЕНИЙ
+============================================================
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+~/.juliaup/bin/julia
+```
+
+ВСТАВИТЬ В JULIA:
+```julia
+using Pkg
+Pkg.activate("/home/lilidji/github-push-work/labs/lab04/project")
+Pkg.instantiate()
+Pkg.precompile()
+exit()
+```
+
+ВСТАВИТЬ В ТЕРМИНАЛ:
+```bash
+cd /home/lilidji/github-push-work/labs/lab04/project
+
+~/.juliaup/bin/julia --project=. scripts/sir_run_basic.jl
+~/.juliaup/bin/julia --project=. scripts/sir_scan_beta.jl
+~/.juliaup/bin/julia --project=. scripts/sir_migration_effect.jl
+~/.juliaup/bin/julia --project=. scripts/sir_optimize_parameters.jl
+~/.juliaup/bin/julia --project=. scripts/sir_visualize_dynamics.jl
+~/.juliaup/bin/julia --project=. scripts/sir_heterogeneity_effect.jl
+~/.juliaup/bin/julia --project=. scripts/sir_quarantine_scenario.jl
+~/.juliaup/bin/julia --project=. scripts/sir_optimize_with_constraint.jl
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_run_basic.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_scan_beta.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_migration_effect.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_optimize_parameters.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_visualize_dynamics.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_heterogeneity_effect.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_quarantine_scenario.jl
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/sir_optimize_with_constraint.jl
+
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_run_basic/sir_run_basic.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_scan_beta/sir_scan_beta.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_migration_effect/sir_migration_effect.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_optimize_parameters/sir_optimize_parameters.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_visualize_dynamics/sir_visualize_dynamics.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_heterogeneity_effect/sir_heterogeneity_effect.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_quarantine_scenario/sir_quarantine_scenario.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/sir_optimize_with_constraint/sir_optimize_with_constraint.ipynb
+
+ls -1 plots | sort
+find data -maxdepth 2 -type f | sort
+find scripts -maxdepth 2 -type f | sort
+find notebooks -maxdepth 2 -type f | sort
+find docs -maxdepth 2 -type f | sort
+```

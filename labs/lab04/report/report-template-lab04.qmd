@@ -1,0 +1,157 @@
+---
+author:
+  - name: Глущенко Евгений Игоревич
+    affiliation:
+      - name: Российский университет дружбы народов имени Патриса Лумумбы
+        country: Российская Федерация
+        city: Москва
+title: "Отчёт по лабораторной работе №4"
+subtitle: "Имитационное моделирование: реализация SIR-модели в агентном подходе"
+license: "CC BY"
+---
+
+# Цель работы
+
+[Кратко переписать цель работы.]
+
+Исполнитель работы: Глущенко Евгений Игоревич.  
+Группа: НФИбд-01-23.  
+Студенческий билет: 1132239110.
+
+# Задание
+
+1. [Пункт 1.]
+2. [Пункт 2.]
+3. [Пункт 3.]
+4. [Пункт 4.]
+5. [Пункт 5.]
+6. [Пункт 6.]
+7. [Пункт 7.]
+
+# Теоретическое введение
+
+## Модель SIR
+
+[Кратко переписать, что такое SIR.]
+
+## Агентное моделирование и инструменты
+
+[Кратко переписать про Agents.jl, DrWatson.jl, Literate.jl.]
+
+## Литературное программирование
+
+[Кратко переписать идею literate programming.]
+
+## Параметры модели
+
+[Переписать таблицу параметров.]
+
+# Выполнение лабораторной работы
+
+## Настройка окружения
+
+[Текст про запуск Julia и активацию проекта.]
+
+![Запуск Julia REPL](image/fig01-julia-start.png){width=85%}
+
+![Активация проекта и предкомпиляция пакетов](image/fig02-pkg-setup.png){width=85%}
+
+## Реализация базовой SIR-модели
+
+[Текст про `src/sir_model.jl`.]
+
+## Базовый эксперимент
+
+[Текст про `sir_run_basic.jl`.]
+
+![Запуск скрипта `sir_run_basic.jl`](image/fig03-sir-run-basic.png){width=85%}
+
+![График базовой динамики](image/generated/sir_basic_dynamics.png){width=90%}
+
+## Исследование коэффициента заразности
+
+[Текст про `sir_scan_beta.jl`.]
+
+![Запуск `sir_scan_beta.jl`](image/fig04-sir-scan-beta.png){width=85%}
+
+![График зависимости эпидемических показателей от `beta`](image/generated/beta_scan_summary.png){width=90%}
+
+## Исследование миграции
+
+[Текст про `sir_migration_effect.jl`.]
+
+![Запуск `sir_migration_effect.jl`](image/fig05-sir-migration.png){width=85%}
+
+![График влияния миграции](image/generated/migration_effect.png){width=90%}
+
+![CSV-файл исследования миграции](image/fig15-migration-scan-csv.png){width=92%}
+
+## Базовая оптимизация и итоговая визуализация
+
+[Текст про оптимизацию и сводный график.]
+
+![Запуск базовой оптимизации](image/fig06-sir-optimize-basic.png){width=92%}
+
+![CSV-файл базовой оптимизации](image/fig16-optimization-basic-csv.png){width=92%}
+
+![Запуск итоговой визуализации](image/fig07-sir-visualize.png){width=85%}
+
+![Сводный график по `beta`](image/generated/sir_beta_visualization.png){width=90%}
+
+## Генерация производных форматов и выполнение notebook
+
+[Текст про `tangle.jl` и `nbconvert`.]
+
+![Генерация производных форматов](image/fig11-tangle-generation.png){width=90%}
+
+![Выполнение notebook через `nbconvert`](image/fig12-notebook-execution.png){width=90%}
+
+![Итоговая структура файлов](image/fig13-generated-files.png){width=75%}
+
+# Дополнительные задания
+
+## Задание 1. Базовый уровень
+
+[Переписать вывод по `R_0`.]
+
+## Задание 2. Исследование порога
+
+[Переписать вывод про порог.]
+
+## Задание 3. Эффект гетерогенности
+
+[Текст про неоднородность.]
+
+![Запуск скрипта исследования гетерогенности](image/fig08-sir-heterogeneity-run.png){width=85%}
+
+![График динамики по городам](image/generated/heterogeneity_dynamics.png){width=90%}
+
+![CSV-файл гетерогенной динамики](image/fig14-heterogeneity-dynamics-csv.png){width=75%}
+
+## Задание 4. Миграция
+
+[Переписать вывод по миграции.]
+
+## Задание 5. Карантинные меры
+
+[Текст про карантин.]
+
+![Запуск карантинного сценария](image/fig09-sir-quarantine-run.png){width=85%}
+
+![Сравнение без карантина и с карантином](image/generated/quarantine_comparison.png){width=90%}
+
+![Базовый сценарий без карантина](image/fig18-quarantine-baseline-csv.png){width=60%}
+
+![Сценарий с включённым карантином](image/fig19-quarantine-enabled-csv.png){width=60%}
+
+## Задание 6. Оптимизация с ограничением на пик
+
+[Текст про ограниченную оптимизацию.]
+
+![Запуск ограниченной оптимизации](image/fig10-sir-optimize-constraint-run.png){width=92%}
+
+![CSV-файл оптимизации при ограничении на пик](image/fig17-optimization-constraint-csv.png){width=95%}
+
+# Выводы
+
+[Кратко переписать выводы.]
