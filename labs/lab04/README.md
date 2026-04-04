@@ -6,7 +6,7 @@
 
 - [Основной репозиторий](https://github.com/eigluthenko/-2026-1--study--simulation-modeling)
 - [Папка лабораторной работы №4](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/tree/master/labs/lab04)
-- [Релиз lab04](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/releases/tag/v1.0.3)
+- [Релиз lab04](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/releases/tag/v1.0.4)
 - [CHANGELOG](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/blob/master/CHANGELOG.md)
 
 ### GitVerse
@@ -27,7 +27,6 @@
 ## Видео на VK Video
 
 - [Плейлист лабораторной работы №4](https://vkvideo.ru/playlist/-202243462_3/season_0)
-- [Выполнение лабораторной работы 4](https://vkvideo.ru/playlist/-202243462_3/season_0)
-- [Составление отчёта](https://vkvideo.ru/playlist/-202243462_3/season_0)
-- [Составление презентации](https://vkvideo.ru/playlist/-202243462_3/season_0)
-- [Защита: презентация](https://vkvideo.ru/playlist/-202243462_3/season_0)
+- [Прямое видео 1](https://vkvideo.ru/video-202243462_456239044?list=ln-1te2QaTJXKVB4NjYrh)
+- [Прямое видео 2](https://vkvideo.ru/video-202243462_456239043?list=ln-1FoYhwFJatfEyDfYzQ)
+- [Прямое видео 3](https://vkvideo.ru/video-202243462_456239045?list=ln-jb45hZdZ9iIhFQQVb5)
