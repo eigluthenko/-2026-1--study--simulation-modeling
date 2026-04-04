@@ -1,39 +1,33 @@
-# Лабораторная работа №4: Агентная SIR-модель
+# Лабораторная работа №4: Агентная SIR-модель — Ссылки на ресурсы
 
-## Состав работы
+## Репозитории
 
-- `project/` — исходный Julia-проект, сценарии моделирования, графики и CSV
-- `report/` — исходники отчёта и шаблон для записи на видео
-- `presentation/` — исходники презентации, шаблон для записи и речь для защиты
+### GitHub
 
-## Основные сценарии
+- [Основной репозиторий](https://github.com/eigluthenko/-2026-1--study--simulation-modeling)
+- [Папка лабораторной работы №4](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/tree/master/labs/lab04)
+- [Релиз lab04](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/releases/tag/v1.0.3)
+- [CHANGELOG](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/blob/master/CHANGELOG.md)
 
-- `project/scripts/sir_run_basic.jl`
-- `project/scripts/sir_scan_beta.jl`
-- `project/scripts/sir_migration_effect.jl`
-- `project/scripts/sir_optimize_parameters.jl`
-- `project/scripts/sir_visualize_dynamics.jl`
-- `project/scripts/sir_heterogeneity_effect.jl`
-- `project/scripts/sir_quarantine_scenario.jl`
-- `project/scripts/sir_optimize_with_constraint.jl`
-- `project/scripts/tangle.jl`
+### GitVerse
 
-## Артефакты проекта
+- [Основной репозиторий](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling)
+- [Папка лабораторной работы №4](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/content/master/labs/lab04)
+- [Релиз lab04](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/releases/tag/v1.0.4)
+- [CHANGELOG](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/content/master/CHANGELOG.md)
 
-- `project/plots/` — итоговые графики
-- `project/data/` — CSV-файлы с результатами
-- `project/scripts/<name>/` — clean-версии `.jl`
-- `project/notebooks/<name>/` — `ipynb`
-- `project/docs/<name>/` — `qmd`
+## Видео на RuTube
 
-## Отчёт
+- [Плейлист лабораторной работы №4](https://rutube.ru/plst/1569322/)
+- [Выполнение лабораторной работы 4](https://rutube.ru/video/f4cb11d9f69eaa602fe903a7b470d76e/)
+- [Составление отчёта](https://rutube.ru/video/83e079b94f3788fd0a56c3de5072dc15/)
+- [Составление презентации](https://rutube.ru/video/32461b39f2fb6c7a5cd78763549e9cec/)
+- [Защита: презентация](https://rutube.ru/video/82ad8dc9ee02865b7362c6ddb0ed6aa2/)
 
-- `report/simulation-modeling-lab04-report.qmd`
-- `report/report-template-lab04.qmd`
-- `report/code-appendix.md`
+## Видео на VK Video
 
-## Презентация
-
-- `presentation/simulation-modeling-lab04-presentation.qmd`
-- `presentation/presentation-template-lab04.qmd`
-- `presentation/SPEECH-LAB04-5MIN.md`
+- [Плейлист лабораторной работы №4](https://vkvideo.ru/playlist/-202243462_3/season_0)
+- [Выполнение лабораторной работы 4](https://vkvideo.ru/playlist/-202243462_3/season_0)
+- [Составление отчёта](https://vkvideo.ru/playlist/-202243462_3/season_0)
+- [Составление презентации](https://vkvideo.ru/playlist/-202243462_3/season_0)
+- [Защита: презентация](https://vkvideo.ru/playlist/-202243462_3/season_0)
