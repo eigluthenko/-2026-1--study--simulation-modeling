@@ -1,0 +1,244 @@
+Лабораторная работа 5. Сети Петри
+Команды для записи видео и пояснения к ним
+
+Рабочий каталог:
+/home/lilidji/labs/lab05/project
+
+
+1. Перейти в каталог проекта лабораторной работы
+
+cd /home/lilidji/labs/lab05/project
+
+Что делает:
+Переходит в папку, где лежат все файлы лабораторной работы: Project.toml,
+src/, scripts/, data/, plots/, docs/ и notebooks/.
+
+
+2. Проверить версию Julia
+
+~/.juliaup/bin/julia --version
+
+Что делает:
+Показывает установленную версию Julia. Это подтверждает, что среда для запуска
+модели доступна.
+
+
+3. Подготовить окружение проекта Julia
+
+~/.juliaup/bin/julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+
+Что делает:
+Активирует окружение текущего проекта, устанавливает зависимости из Project.toml
+и Manifest.toml, затем выполняет предварительную компиляцию пакетов.
+
+Используемые пакеты:
+CSV, DataFrames, DrWatson, CairoMakie, Literate, IJulia, ImageIO.
+
+Примечание:
+Первый запуск может быть долгим, потому что Julia компилирует графические и
+табличные пакеты. Повторные запуски будут быстрее.
+
+
+4. Запустить базовый эксперимент
+
+~/.juliaup/bin/julia --project=. scripts/dining_philosophers.jl
+
+Что делает:
+Запускает моделирование задачи обедающих философов для двух сетей Петри:
+классической сети без арбитра и сети с арбитром.
+
+Результат:
+В консоли выводится информация о финальном времени, числе событий, финальном
+числе голодных и едящих философов, а также признак deadlock.
+
+Ожидаемый смысл результата:
+Для классической сети выводится deadlock: true.
+Для сети с арбитром выводится deadlock: false.
+
+Создаваемые файлы:
+data/dining_classic.csv
+data/dining_arbiter.csv
+plots/classic_simulation.png
+plots/arbiter_simulation.png
+
+
+5. Построить GIF-анимацию изменения маркировки
+
+~/.juliaup/bin/julia --project=. scripts/dining_philosophers_animation.jl
+
+Что делает:
+Строит анимацию движения фишек по позициям сети Петри для классической модели
+с тремя философами.
+
+Результат:
+Создается файл:
+plots/philosophers_simulation.gif
+
+Смысл результата:
+Анимация показывает, как философы переходят между состояниями Think, Hungry,
+Eat и как меняется состояние вилок Fork.
+
+
+6. Построить итоговый сравнительный график
+
+~/.juliaup/bin/julia --project=. scripts/dining_philosophers_report.jl
+
+Что делает:
+Загружает CSV-файлы базового эксперимента и строит сравнительный график только
+по состояниям Eat_i для классической сети и сети с арбитром.
+
+Результат:
+Создается файл:
+plots/final_report.png
+
+Смысл результата:
+На графике видно, что в классической сети состояния Eat_i исчезают после
+наступления deadlock, а в сети с арбитром философы продолжают поочередно есть.
+
+
+7. Выполнить параметрическое исследование
+
+~/.juliaup/bin/julia --project=. scripts/dining_philosophers_params.jl
+
+Что делает:
+Запускает серию экспериментов для разных значений:
+N = 3, 5, 7
+tmax = 30.0, 50.0, 80.0
+seed = 123, 124, 125
+
+Для каждой комбинации параметров проверяются две сети:
+classic и arbiter.
+
+Результат:
+Создаются файлы:
+data/dining_params.csv
+plots/dining_params.png
+
+Ожидаемый смысл результата:
+В консоли выводится таблица deadlock_rate:
+classic = 1.0
+arbiter = 0.0
+
+Это означает, что классическая сеть во всех запусках пришла к deadlock, а сеть с
+арбитром ни разу не заблокировалась.
+
+
+8. Сгенерировать clean-скрипт, Quarto-документ и notebook для базового эксперимента
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/dining_philosophers.jl
+
+Что делает:
+Преобразует literate-скрипт scripts/dining_philosophers.jl в три производных
+формата.
+
+Результат:
+scripts/dining_philosophers/dining_philosophers.jl
+docs/dining_philosophers/dining_philosophers.qmd
+notebooks/dining_philosophers/dining_philosophers.ipynb
+
+
+9. Сгенерировать производные форматы для скрипта анимации
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/dining_philosophers_animation.jl
+
+Что делает:
+Создает clean-версию, Quarto-документ и Jupyter notebook для сценария анимации.
+
+Результат:
+scripts/dining_philosophers_animation/dining_philosophers_animation.jl
+docs/dining_philosophers_animation/dining_philosophers_animation.qmd
+notebooks/dining_philosophers_animation/dining_philosophers_animation.ipynb
+
+
+10. Сгенерировать производные форматы для итогового отчета
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/dining_philosophers_report.jl
+
+Что делает:
+Создает clean-версию, Quarto-документ и Jupyter notebook для сценария итогового
+сравнительного графика.
+
+Результат:
+scripts/dining_philosophers_report/dining_philosophers_report.jl
+docs/dining_philosophers_report/dining_philosophers_report.qmd
+notebooks/dining_philosophers_report/dining_philosophers_report.ipynb
+
+
+11. Сгенерировать производные форматы для параметрического исследования
+
+~/.juliaup/bin/julia --project=. scripts/tangle.jl scripts/dining_philosophers_params.jl
+
+Что делает:
+Создает clean-версию, Quarto-документ и Jupyter notebook для параметрического
+исследования.
+
+Результат:
+scripts/dining_philosophers_params/dining_philosophers_params.jl
+docs/dining_philosophers_params/dining_philosophers_params.qmd
+notebooks/dining_philosophers_params/dining_philosophers_params.ipynb
+
+
+12. Показать созданные графики и анимацию
+
+ls -1 plots | sort
+
+Что делает:
+Выводит список файлов в папке plots.
+
+Ожидаемые файлы:
+arbiter_simulation.png
+classic_simulation.png
+dining_params.png
+final_report.png
+philosophers_simulation.gif
+
+
+13. Показать созданные CSV-файлы
+
+find data -maxdepth 1 -type f | sort
+
+Что делает:
+Выводит список таблиц с результатами моделирования.
+
+Ожидаемые файлы:
+data/dining_arbiter.csv
+data/dining_classic.csv
+data/dining_params.csv
+
+
+14. Показать исходные и clean-скрипты
+
+find scripts -maxdepth 2 -type f | sort
+
+Что делает:
+Выводит список исходных скриптов и clean-версий, созданных через Literate.jl.
+
+
+15. Показать созданные notebook-файлы
+
+find notebooks -maxdepth 2 -type f | sort
+
+Что делает:
+Выводит список Jupyter notebook файлов, созданных через Literate.jl.
+
+
+16. Показать созданные Quarto-документы
+
+find docs -maxdepth 2 -type f | sort
+
+Что делает:
+Выводит список Quarto-документов, созданных через Literate.jl.
+
+
+Короткий вариант запуска всех команд одной командой
+
+bash COMMANDS-LAB05.sh
+
+Что делает:
+Последовательно выполняет все основные шаги лабораторной работы:
+проверку Julia, подготовку окружения, моделирование, построение графиков,
+анимацию, параметрическое исследование, генерацию clean/qmd/ipynb и вывод
+списков созданных файлов.
+
+Для видео лучше использовать пошаговый вариант выше, потому что так видно,
+что делает каждый этап лабораторной работы.

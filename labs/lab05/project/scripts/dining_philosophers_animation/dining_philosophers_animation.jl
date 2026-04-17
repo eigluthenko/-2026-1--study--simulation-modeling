@@ -1,0 +1,25 @@
+using DrWatson
+@quickactivate "project"
+
+include(srcdir("DiningPhilosophers.jl"))
+
+using .DiningPhilosophers
+
+function main()
+    mkpath(plotsdir())
+
+    N = 3
+    tmax = 30.0
+    net, u0, place_names = build_classical_network(N)
+    df = simulate_stochastic(net, u0, tmax; seed = 123)
+
+    output = plotsdir("philosophers_simulation.gif")
+    save_marking_animation(df, place_names, output; fps = 2)
+
+    println("Animation saved:")
+    println("  $output")
+end
+
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

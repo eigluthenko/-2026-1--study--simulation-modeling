@@ -1,0 +1,26 @@
+using DrWatson
+@quickactivate "project"
+
+include(srcdir("DiningPhilosophers.jl"))
+
+using .DiningPhilosophers
+using CSV
+using DataFrames
+
+function main()
+    mkpath(plotsdir())
+
+    df_classic = CSV.read(datadir("dining_classic.csv"), DataFrame)
+    df_arbiter = CSV.read(datadir("dining_arbiter.csv"), DataFrame)
+    N = 5
+
+    output = plotsdir("final_report.png")
+    plot_eat_comparison(df_classic, df_arbiter, N, output)
+
+    println("Final comparison plot saved:")
+    println("  $output")
+end
+
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end
