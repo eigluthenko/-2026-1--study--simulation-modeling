@@ -20,6 +20,7 @@
 
 - [Плейлист лабораторной работы №5](https://rutube.ru/plst/1592906/)
 - [Выполнение лабораторной работы 5](https://rutube.ru/video/65529b3d6adf586aeab5462211aa7dcb/)
+- [Анимация сети Петри](https://rutube.ru/video/f51b9d40907e1c4cfc0db7e6d28f5aad/)
 - [Составление отчёта](https://rutube.ru/video/48d734bda80af4a3493e716bf3817419/)
 - [Составление презентации](https://rutube.ru/video/e23279dbe6e055541b9d9ba747002a03/)
 - [Защита: презентация](https://rutube.ru/video/0c3974fde87efd8e957a3b0acb6867ee/)
@@ -28,6 +29,7 @@
 
 - [Плейлист лабораторной работы №5](https://vkvideo.ru/playlist/-202243462_4)
 - [Выполнение лабораторной работы 5](https://vkvideo.ru/video-202243462_456239047)
+- [Анимация сети Петри](https://vkvideo.ru/video-202243462_456239051?list=ln-CpHMGyFtZ5Ori6FvTs)
 - [Составление отчёта](https://vkvideo.ru/video-202243462_456239049?pl=-202243462_4)
 - [Составление презентации](https://vkvideo.ru/video-202243462_456239050?pl=-202243462_4)
 - [Защита: презентация](https://vkvideo.ru/video-202243462_456239048)
