@@ -20,7 +20,7 @@
 
 - `project/` — Julia-проект с моделью сети Петри, скриптами, CSV-таблицами, графиками и literate-форматами.
 - `report/` — исходник отчёта Quarto и собранные PDF/DOCX.
-- `presentation/` — исходник презентации Quarto, PDF/HTML/PPTX и текст для защиты.
+- `presentation/` — исходник презентации Quarto и собранные PDF/HTML/PPTX.
 
 ## Основные результаты
 

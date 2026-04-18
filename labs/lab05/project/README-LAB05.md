@@ -24,9 +24,3 @@ Generated artifacts:
 - `scripts/<name>/<name>.jl`
 - `docs/<name>/<name>.qmd`
 - `notebooks/<name>/<name>.ipynb`
-
-Run all commands:
-
-```bash
-bash COMMANDS-LAB05.sh
-```
