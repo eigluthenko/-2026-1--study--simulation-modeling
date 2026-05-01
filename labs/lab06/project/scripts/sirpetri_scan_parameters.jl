@@ -1,0 +1,37 @@
+# # Параметрическое исследование коэффициента заражения beta
+# Для каждого beta выполняется детерминированная симуляция. Итоговая таблица
+# содержит пик инфицированных и финальное число выздоровевших.
+
+using DrWatson
+@quickactivate "project"
+
+using CairoMakie
+using CSV
+using DataFrames
+
+include(srcdir("SIRPetri.jl"))
+using .SIRPetri
+
+mkpath(datadir())
+mkpath(plotsdir())
+
+beta_range = 0.1:0.05:0.8
+gamma_fixed = 0.1
+tmax = 100.0
+
+results = DataFrame(beta = Float64[], peak_I = Float64[], final_R = Float64[])
+
+for beta in beta_range
+    net, u0, _ = build_sir_network(beta, gamma_fixed)
+    df = simulate_deterministic(net, u0, (0.0, tmax); saveat = 0.5, rates = [beta, gamma_fixed])
+    push!(results, (beta = Float64(beta), peak_I = maximum(df.I), final_R = df.R[end]))
+end
+
+CSV.write(datadir("sir_scan.csv"), results)
+save(plotsdir("sir_scan.png"), plot_scan(results))
+
+println("Beta scan finished")
+println("  rows: ", nrow(results))
+println("  peak_I range: ", round(minimum(results.peak_I), digits = 3), " .. ", round(maximum(results.peak_I), digits = 3))
+println("  saved: data/sir_scan.csv")
+println("  saved: plots/sir_scan.png")

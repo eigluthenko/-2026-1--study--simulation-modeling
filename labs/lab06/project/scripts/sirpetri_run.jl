@@ -1,0 +1,42 @@
+# # Базовый прогон SIR в подходе сетей Петри
+# Сценарий строит сеть Петри, запускает детерминированную и стохастическую
+# симуляции, сохраняет CSV-таблицы и графики динамики S, I, R.
+
+using DrWatson
+@quickactivate "project"
+
+using CairoMakie
+using CSV
+using DataFrames
+using Random
+
+include(srcdir("SIRPetri.jl"))
+using .SIRPetri
+
+mkpath(datadir())
+mkpath(plotsdir())
+
+beta = 0.3
+gamma = 0.1
+tmax = 100.0
+
+net, u0, states = build_sir_network(beta, gamma)
+
+df_det = simulate_deterministic(net, u0, (0.0, tmax); saveat = 0.5, rates = [beta, gamma])
+CSV.write(datadir("sir_det.csv"), df_det)
+
+Random.seed!(123)
+df_stoch = simulate_stochastic(net, u0, (0.0, tmax); rates = [beta, gamma])
+CSV.write(datadir("sir_stoch.csv"), df_stoch)
+
+save(plotsdir("sir_det_dynamics.png"), plot_sir(df_det; title = "Deterministic SIR dynamics"))
+save(plotsdir("sir_stoch_dynamics.png"), plot_sir(df_stoch; title = "Stochastic SIR dynamics"))
+
+println("Baseline SIR Petri-net run")
+println("  states: ", states)
+println("  deterministic rows: ", nrow(df_det))
+println("  stochastic rows: ", nrow(df_stoch))
+println("  deterministic peak I: ", round(maximum(df_det.I), digits = 3))
+println("  stochastic peak I: ", maximum(df_stoch.I))
+println("  saved: data/sir_det.csv, data/sir_stoch.csv")
+println("  saved: plots/sir_det_dynamics.png, plots/sir_stoch_dynamics.png")
