@@ -20,7 +20,6 @@
 - `simulation-modeling-lab06-report.docx`
 - `simulation-modeling-lab06-report.md`
 - `simulation-modeling-lab06-presentation.pdf`
-- `simulation-modeling-lab06-presentation.html`
 - `simulation-modeling-lab06-presentation.pptx`
 - `simulation-modeling-lab06-presentation.md`
 
@@ -28,6 +27,7 @@
 
 - GitHub and GitVerse releases for `v1.0.6` are intended to contain the same release assets.
 - The Markdown assets are included explicitly so the source versions of the report and presentation are available in both release pages.
+- The standalone presentation HTML is kept in the repository and inside `simulation-modeling-lab06-sources.zip`.
 
 ## [v1.0.5] - 2026-04-18
 
@@ -65,4 +65,3 @@
 ### Features
 
 * **main:** make course structure ([6657be5](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/commits/6657be5e0114cc8be4e7fad97da0dd1f681ecb24))
-
