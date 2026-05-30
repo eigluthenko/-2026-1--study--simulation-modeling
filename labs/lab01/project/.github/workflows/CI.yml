@@ -1,37 +1,26 @@
 name: CI
+
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - main
-    tags: '*'
+    paths:
+      - 'labs/lab01/project/**'
   pull_request:
-concurrency:
-  # Skip intermediate builds: always.
-  # Cancel intermediate builds: only if it is a pull request build.
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+    paths:
+      - 'labs/lab01/project/**'
+
 jobs:
-  test:
-    name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '1'
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
+  julia-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: labs/lab01/project
     steps:
       - uses: actions/checkout@v4
-      - uses: julia-actions/setup-julia@v1
+      - uses: julia-actions/setup-julia@v2
         with:
-          version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
-      - uses: julia-actions/cache@v1
-      - uses: julia-actions/julia-buildpkg@v1
-
+          version: '1.11'
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
       - name: Run tests
-        run: >
-          julia --project=. --color=yes test/runtests.jl
+        run: julia --project=. test/runtests.jl

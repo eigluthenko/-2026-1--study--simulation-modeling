@@ -1,17 +1,20 @@
-using DrWatson, Test
+using Test
+using DrWatson
+
 @quickactivate "project"
 
-# Here you include files using `srcdir`
-# include(srcdir("file.jl"))
+include(srcdir("ExponentialGrowth.jl"))
+using .ExponentialGrowth
 
-# Run test suite
-println("Starting tests")
-ti = time()
+@test analytic_growth(1.0, 0.3, 0.0) == 1.0
+@test analytic_growth(1.0, 0.3, 10.0) ≈ exp(3.0)
+@test doubling_time(0.3) ≈ log(2) / 0.3
 
-@testset "project tests" begin
-    @test 1 == 1
-end
+df = run_growth(1.0, 0.3, (0.0, 10.0); dt = 0.05)
+@test df.t[1] == 0.0 && df.t[end] ≈ 10.0
+@test df.u[end] ≈ exp(3.0) rtol = 1e-3
+@test maximum(df.abs_error) < 1e-2
 
-ti = time() - ti
-println("\nTest took total time of:")
-println(round(ti/60, digits = 3), " minutes")
+scan = run_growth_scan(1.0, [0.1, 0.3, 0.5], (0.0, 10.0); dt = 0.05)
+@test size(scan, 1) == 3
+@test issorted(scan.doubling_time, rev = true)
