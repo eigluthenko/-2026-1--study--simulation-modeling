@@ -6,14 +6,14 @@
 
 - [Основной репозиторий](https://github.com/eigluthenko/-2026-1--study--simulation-modeling)
 - [Папка лабораторной работы №1](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/tree/master/labs/lab01)
-- [Релиз lab01](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/releases/tag/v1.0.1)
+- [Релиз lab01](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/releases/tag/v1.0.0)
 - [CHANGELOG](https://github.com/eigluthenko/-2026-1--study--simulation-modeling/blob/master/CHANGELOG.md)
 
 ### GitVerse
 
 - [Основной репозиторий](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling)
 - [Папка лабораторной работы №1](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/content/master/labs/lab01)
-- [Релиз lab01](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/releases/tag/v1.0.1)
+- [Релиз lab01](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/releases/tag/v1.0.0)
 - [CHANGELOG](https://gitverse.ru/eiglushchenko/2026-1--study--simulation-modeling/content/master/CHANGELOG.md)
 
 ## Состав лабораторной работы
