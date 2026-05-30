@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'labs/lab08/project/**'
+  pull_request:
+    paths:
+      - 'labs/lab08/project/**'
+
+jobs:
+  julia-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: labs/lab08/project
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: '1.11'
+      - name: Instantiate
+        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
+      - name: Run tests
+        run: julia --project=. test/runtests.jl
